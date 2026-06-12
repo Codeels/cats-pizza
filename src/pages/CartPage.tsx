@@ -95,6 +95,7 @@ export function CartPage() {
               <button
                 type="button"
                 className="cart-summary__order"
+                data-testid = 'checkoutButton'
                 onClick={handleOrderClick}
                 disabled={state.items.length === 0}>
                 Оформить заказ

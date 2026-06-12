@@ -138,6 +138,7 @@ export function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalProps) {
       <div className="page-tabs" style={{ marginBottom: 16 }}>
         <button
           type="button"
+          data-testid = 'signInTab'
           onClick={() => switchMode('login')}
           disabled={mode === 'login'}
           className={`page-tabs__button ${mode === 'login' ? 'page-tabs__button--active' : ''}`}>
@@ -145,6 +146,7 @@ export function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalProps) {
         </button>
         <button
           type="button"
+          data-testid = 'signUpTab'
           onClick={() => switchMode('register')}
           disabled={mode === 'register'}
           className={`page-tabs__button ${mode === 'register' ? 'page-tabs__button--active' : ''}`}>
@@ -188,7 +190,7 @@ export function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalProps) {
         {error && <p className="page-card__error">{error}</p>}
         {message && <p className="page-card__success">{message}</p>}
 
-        <button type="submit" className="page-card__submit" disabled={isSubmitting}>
+        <button type="submit" className="page-card__submit" data-testid = 'signInUpModalButton' disabled={isSubmitting}>
           {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
         </button>
       </form>
