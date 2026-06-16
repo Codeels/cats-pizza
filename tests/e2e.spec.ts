@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, request } from '@playwright/test';
 
 //авторизация
 //регистрация
@@ -26,27 +26,56 @@ test('Registration', async ({ page }) => {
   await expect(page.getByTestId('signOutButton')).toBeVisible();
 });
 
-test('Order with unauthorized user', async ({ page }) => {
-  await page.goto('http://localhost:5173/');
-  await page.getByTestId('catCard_4').getByTestId('addToCartCardButton').click();
-  await page.getByTestId('addToCartModalButton').click();
-  await page.getByTestId('cartHeaderButton').click();
-  await page.getByTestId('openCartButton').click();
-  await page.getByTestId('checkoutButton').click();
-  await page.getByLabel('Email').fill('test@test.ru');
-  await page.getByLabel('Пароль').fill('Qwerty');
-  await page.getByTestId('signInUpModalButton').click();
-  await page.getByLabel('Город').fill('Москва');
-  await page.getByLabel('Улица').fill('Первая');
-  await page.getByLabel('Дом').fill('2');
-  await page.getByLabel('Квартира').fill('3');
-  await page.getByLabel('Комментарий курьеру').fill('Комментарий для курьера');
-  await page.getByTestId('approveOrderModalButton').click();
-  await page.getByTestId('closeOrderModalButton').click();
-  await page.getByTestId('ordersHeaderButton').click();
-  //await page.waitForTimeout(1000);
-  //expect(await page.getByTestId('ordersList').getByRole('listitem').count()).toBeGreaterThan(0);
-  await expect(page.getByTestId('ordersList').getByRole('listitem').first()).toBeVisible();
-});
+test.describe.serial('Ordering', () => {
+  test.afterEach(async ({ request }) => {
+    request.delete('http://localhost:5173/api/orders/by-email', {
+      data: { email: 'test@test.ru' },
+    });
+  });
 
-//TODO следующий тест с заранее авторизованным пользователем
+  test('Order with unauthorized user', async ({ page }) => {
+    await page.goto('http://localhost:5173/');
+    await page.getByTestId('catCard_4').getByTestId('addToCartCardButton').click();
+    await page.getByTestId('addToCartModalButton').click();
+    await page.getByTestId('cartHeaderButton').click();
+    await page.getByTestId('openCartButton').click();
+    await page.getByTestId('checkoutButton').click();
+    await page.getByLabel('Email').fill('test@test.ru');
+    await page.getByLabel('Пароль').fill('Qwerty');
+    await page.getByTestId('signInUpModalButton').click();
+    await page.getByLabel('Город').fill('Москва');
+    await page.getByLabel('Улица').fill('Первая');
+    await page.getByLabel('Дом').fill('2');
+    await page.getByLabel('Квартира').fill('3');
+    await page.getByLabel('Комментарий курьеру').fill('Комментарий для курьера');
+    await page.getByTestId('approveOrderModalButton').click();
+    await page.getByTestId('closeOrderModalButton').click();
+    await page.getByTestId('ordersHeaderButton').click();
+    //await page.waitForTimeout(1000);
+    //expect(await page.getByTestId('ordersList').getByRole('listitem').count()).toBeGreaterThan(0);
+    await expect(page.getByTestId('ordersList').getByRole('listitem').first()).toBeVisible();
+  });
+
+  test('Order with authorized user', async ({ page }) => {
+    await page.goto('http://localhost:5173/');
+    await page.getByTestId('signInButton').click();
+    await page.getByLabel('Email:').fill('test@test.ru');
+    await page.getByLabel('Пароль:').fill('Qwerty');
+    await page.getByTestId('signInUpModalButton').click();
+    await page.getByTestId('catCard_4').getByTestId('addToCartCardButton').click();
+    await page.getByTestId('addToCartModalButton').click();
+    await page.getByTestId('cartHeaderButton').click();
+    await page.getByTestId('openCartButton').click();
+    await page.getByTestId('checkoutButton').click();
+    await page.getByLabel('Город*:').fill('Москва');
+    await page.getByLabel('Улица*:').fill('Тестовая');
+    await page.getByLabel('Дом*:').fill('1');
+    await page.getByLabel('Квартира:').fill('1');
+    await page.getByLabel('Комментарий курьеру:').fill('комментарий для курьера');
+    await page.getByTestId('approveOrderModalButton').click();
+    //await expect(page.getByTestId('orderApproved')).toBeVisible();
+    await page.getByTestId('closeOrderModalButton').click();
+    await page.getByTestId('ordersHeaderButton').click();
+    await expect(page.getByTestId('ordersList').getByRole('listitem').first()).toBeVisible();
+  });
+});

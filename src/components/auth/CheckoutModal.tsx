@@ -94,7 +94,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             {apartment ? `, кв. ${apartment}` : ''}.
           </p>
           <p>Способ оплаты: {payment === 'card' ? 'Онлайн-картой' : 'Наличными курьеру'}.</p>
-          <p>Спасибо за заказ!</p>
+          <p data-testid = "orderApproved">Спасибо за заказ!</p>
           <button type="button" className="page-card__submit" data-testid = "closeOrderModalButton" onClick={onClose}>
             Закрыть
           </button>
