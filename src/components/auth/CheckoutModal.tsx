@@ -83,10 +83,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   if (!isOpen) return null;
 
   return (
-    <Modal
+    <Modal         
       isOpen={isOpen}
       onClose={onClose}
       title={submitted ? 'Заказ оформлен' : 'Оформление доставки'}>
+
       {submitted ? (
         <div>
           <p>
