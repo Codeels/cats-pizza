@@ -6,7 +6,7 @@ test.describe.serial('Ordering', () => {
     cleanupApi.deleteOrderByEmail(testUsers.existing.email);
   });
 
-  test('Order with unauthorized user', async ({ homePage, authPage, checkoutPage, ordersPage }) => {
+  test('Order with unauthorized user', async ({ homePage, checkoutPage, ordersPage }) => {
     await homePage.open();
     await homePage.addFirstCatToCart();
     await homePage.goToCheckoutFromCart();
