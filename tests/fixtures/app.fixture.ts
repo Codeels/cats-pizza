@@ -5,7 +5,6 @@ import { AuthModal } from '../pom/pages/AuthModal';
 import { CheckoutPage } from '../pom/pages/CheckoutPage';
 import { OrdersPage } from '../pom/pages/OrdersPage';
 import { CleanupApi } from '../pom/api/CleanupAPI';
-import { request } from 'http';
 
 // Declare the types of your fixtures.
 type MyFixtures = {

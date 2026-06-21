@@ -16,7 +16,7 @@ export function Header({ onCartClick }: HeaderProps) {
 
   return (
     <header className="app-header">
-      <div className="app-header__inner">
+      <div className="app-header__inner" data-testid = 'header'>
         <Link to="/" className="logo">
           <span className="logo__title">Cat Pizza</span>
           <span className="logo__subtitle">Доставка котиков на дом</span>

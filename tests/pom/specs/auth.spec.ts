@@ -14,14 +14,15 @@ test.describe('Auth', () => {
 
   test('Authorization', async ({ homePage, authPage }) => {
     await homePage.open();
+    await homePage.assertLoaded();
     await authPage.signIn(testUsers.existing.email, testUsers.existing.password);
     await authPage.assertSignedIn();
   });
 
   test('Registration', async ({ homePage, authPage }) => {
     createdUserEmail = `${Date.now()}@email.com`;
-
     await homePage.open();
+    await homePage.assertLoaded();
     await authPage.signUp('Test', createdUserEmail, testUsers.existing.password);
     await authPage.assertSignedIn();
   });
