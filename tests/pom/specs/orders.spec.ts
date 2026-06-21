@@ -1,8 +1,10 @@
 import { testAddress, testUsers } from '../data/testData';
 import { test, expect } from '../../fixtures/app.fixture';
+import { CleanupApi } from '../api/CleanupAPI';
 
 test.describe.serial('Ordering', () => {
-  test.afterEach(async ({ cleanupApi }) => {
+  test.afterEach(async ({ request }) => {
+    const cleanupApi = new CleanupApi(request);
     cleanupApi.deleteOrderByEmail(testUsers.existing.email);
   });
 

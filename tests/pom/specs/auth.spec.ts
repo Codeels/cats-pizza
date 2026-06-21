@@ -1,11 +1,15 @@
+import { request } from '@playwright/test';
 import { test, expect } from '../../fixtures/app.fixture';
+import { CleanupApi } from '../api/CleanupAPI';
 import { testUsers } from '../data/testData';
 
 test.describe('Auth', () => {
   let createdUserEmail: string | null = null;
 
-  test.afterAll(async ({ cleanupApi }) => {
+  test.afterAll(async ({ request }) => {
     if (!createdUserEmail) return;
+
+    const cleanupApi = new CleanupApi(request);
 
     cleanupApi.deleteUserByEmail(createdUserEmail);
 

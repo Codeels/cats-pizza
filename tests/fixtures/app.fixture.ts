@@ -36,9 +36,9 @@ export const test = base.extend<MyFixtures>({
   },
   ordersPage: async ({ page }, use) => {
     await use(new OrdersPage(page));
-  },
+  } /*,
   cleanupApi: async ({ request }, use) => {
     await use(new CleanupApi(request));
-  },
+  },*/,
 });
 export { expect } from '@playwright/test';
