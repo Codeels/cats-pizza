@@ -1,5 +1,5 @@
 import { request } from '@playwright/test';
-import { test, expect } from '../../fixtures/app.fixture';
+import { guestTest as test, expect } from '../../fixtures/app.fixture';
 import { CleanupApi } from '../api/CleanupAPI';
 import { testUsers } from '../data/testData';
 
@@ -11,7 +11,7 @@ test.describe('Auth', () => {
 
     const cleanupApi = new CleanupApi(request);
 
-    cleanupApi.deleteUserByEmail(createdUserEmail);
+    await cleanupApi.deleteUserByEmail(createdUserEmail);
 
     createdUserEmail = null;
   });
