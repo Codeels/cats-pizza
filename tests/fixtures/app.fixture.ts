@@ -4,6 +4,7 @@ import { HomePage } from '../pom/pages/HomePage';
 import { AuthModal } from '../pom/pages/AuthModal';
 import { CheckoutPage } from '../pom/pages/CheckoutPage';
 import { OrdersPage } from '../pom/pages/OrdersPage';
+import { CartPage } from '../pom/pages/CartPage';
 import process from 'process';
 import path from 'path';
 //import { CleanupApi } from '../pom/api/CleanupAPI';
@@ -14,6 +15,7 @@ type MyFixtures = {
   authPage: AuthModal;
   checkoutPage: CheckoutPage;
   ordersPage: OrdersPage;
+  cartPage: CartPage;
   //cleanupApi: CleanupApi;
 };
 
@@ -45,10 +47,14 @@ const appTest = base.extend<MyFixtures>({
   },
   ordersPage: async ({ page }, use) => {
     await use(new OrdersPage(page));
-  } /*,
+  },
+  cartPage: async ({ page }, use) => {
+    await use(new CartPage(page));
+  },
+  /*,
   cleanupApi: async ({ request }, use) => {
     await use(new CleanupApi(request));
-  },*/,
+  },*/
 });
 
 export const guestTest = appTest;

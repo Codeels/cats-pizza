@@ -1,4 +1,3 @@
-import { request } from '@playwright/test';
 import { guestTest as test, expect } from '../../fixtures/app.fixture';
 import { CleanupApi } from '../api/CleanupAPI';
 import { testUsers } from '../data/testData';
@@ -29,5 +28,17 @@ test.describe('Auth', () => {
     await homePage.assertLoaded();
     await authPage.signUp('Test', createdUserEmail, testUsers.existing.password);
     await authPage.assertSignedIn();
+  });
+
+  test('Shows error for wrong password', async ({ homePage, authPage }) => {
+    await homePage.open();
+    await authPage.signIn(testUsers.existing.email, 'wrong-password');
+    await authPage.assertError('Неверный email или пароль');
+  });
+
+  test('Reject duplicate registration', async ({ homePage, authPage }) => {
+    await homePage.open();
+    await authPage.signUp('Name', testUsers.existing.email, testUsers.existing.password);
+    await authPage.assertError('Пользователь с таким email уже существует');
   });
 });

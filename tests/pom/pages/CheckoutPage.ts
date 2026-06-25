@@ -26,8 +26,21 @@ export class CheckoutPage {
   }
 
   async submit() {
+    await this.page.waitForTimeout(500);
     await this.page.getByTestId('approveOrderModalButton').click();
-    await expect(this.page.getByTestId('modalTitle')).toContainText('Заказ оформлен');
+    await expect(this.page.getByTestId('modalTitle')).toHaveText('Заказ оформлен');
     await this.page.getByTestId('closeOrderModalButton').click();
+  }
+
+  async submitWithoutAddress() {
+    await this.page.getByTestId('approveOrderModalButton').click();
+  }
+
+  async assertCheckoutOpened() {
+    await expect(this.page.getByTestId('modalTitle')).toHaveText('Оформление доставки');
+  }
+
+  async assertValidationError(message: string) {
+    await expect(this.page.getByText(message)).toBeVisible();
   }
 }
